@@ -1,8 +1,13 @@
 package org.wecancodeit.soundscapes_collection.models;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Artist {
@@ -13,16 +18,18 @@ public class Artist {
 	private String artistName;
 	private String artistImage;
 	private String artistHometown;
-	private String artistRecordLabel;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "artist")
+	private Collection<Album> albums;
 
 	public Artist() {
 	}
 
-	public Artist(String artistName, String artistImage, String artistHometown, String artistRecordLabel) {
+	public Artist(String artistName, String artistImage, String artistHometown) {
 		this.artistName = artistName;
 		this.artistImage = artistImage;
 		this.artistHometown = artistHometown;
-		this.artistRecordLabel = artistRecordLabel;
 	}
 
 	public Long getId() {
@@ -41,8 +48,8 @@ public class Artist {
 		return artistHometown;
 	}
 
-	public String getArtistRecordLabel() {
-		return artistRecordLabel;
+	public Collection<Album> getAlbums() {
+		return albums;
 	}
 
 }
